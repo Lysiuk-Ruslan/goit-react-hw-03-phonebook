@@ -28,7 +28,7 @@ export default class App extends Component {
     this.setState({ contacts: initialContacts });
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = (_prevProps, prevState) => {
     const prevContacts = prevState.contacts;
     const nextContacts = this.state.contacts;
 
@@ -39,7 +39,7 @@ export default class App extends Component {
 
   handleContacts = ({ id, name, number }) => {
     if (this.state.contacts.some(e => e.name === name)) {
-      alert(`${name} is alredy in contacts`);
+      alert(`${name} is already in contacts`);
     } else {
       this.setState(({ contacts }) => ({
         contacts: [...contacts, { id, name, number }],
