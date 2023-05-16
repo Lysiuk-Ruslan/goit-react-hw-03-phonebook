@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Section from './Section/Section';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import Section from './Section/Section';
 
 export default class App extends Component {
   state = {
