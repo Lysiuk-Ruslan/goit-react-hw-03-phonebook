@@ -4,30 +4,38 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import Section from './Section/Section';
 
+const initialContacts = [
+  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+];
+
 export default class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
+  componentDidMount = () => {
+    const localStorageContacts = JSON.parse(localStorage.getItem('contacts'));
+    // console.log(localStorageContacts);
 
-  componentDidUpdate(_, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    if (localStorageContacts !== null) {
+      return this.setState({ contacts: localStorageContacts });
     }
-  }
+
+    this.setState({ contacts: initialContacts });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const prevContacts = prevState.contacts;
+    const nextContacts = this.state.contacts;
+
+    if (prevContacts !== nextContacts) {
+      return localStorage.setItem('contacts', JSON.stringify(nextContacts));
+    }
+  };
 
   handleContacts = ({ id, name, number }) => {
     if (this.state.contacts.some(e => e.name === name)) {
